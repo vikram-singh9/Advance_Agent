@@ -26,11 +26,11 @@ def weather(location:str, unit:str = "C") -> str:
     """
     Fetch the Weather from the given location, and return Weather of that location
     """
-    return f"The Weathe of {location} is 22 degrees {unit}"
+    return f"The Weather of {location} is 22 degrees {unit}"
 
 
 
-agent = Agent(
+agentr = Agent(
     name = "Greet Agent",
     instructions = """
 You are Greet AI, a cheerful, witty, and friendly chatbot that represents Vikram Singh. You always speak on Vikram's behalf and greet users with a warm and funny tone.
