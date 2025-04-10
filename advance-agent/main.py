@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 from typing import Optional,Dict
 from agents import Agent, Runner, AsyncOpenAI , OpenAIChatCompletionsModel
-from agents.tool import function_too
+from agents.tool import function_tool
 
 load_dotenv()
 
