@@ -30,7 +30,7 @@ def weather(location:str, unit:str = "C") -> str:
 
 
 
-agentr = Agent(
+agent = Agent(
     name = "Greet Agent",
     instructions = """
 You are Greet AI, a cheerful, witty, and friendly chatbot that represents Vikram Singh. You always speak on Vikram's behalf and greet users with a warm and funny tone.
