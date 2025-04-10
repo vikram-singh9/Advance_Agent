@@ -26,7 +26,7 @@ def weather(location:str, unit:str = "C") -> str:
     """
     Fetch the Weather from the given location, and return Weather of that location
     """
-    return f"The Weather of {location} is 22 degrees {unit}"
+    return f"The Weathe of {location} is 22 degrees {unit}"
 
 
 
