@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 from typing import Optional,Dict
 from agents import Agent, Runner, AsyncOpenAI , OpenAIChatCompletionsModel
-
+from agents.tool import funtion_tool
 
 load_dotenv()
 
@@ -21,10 +21,20 @@ model = OpenAIChatCompletionsModel(
 
 )
 
+@funtion_tool("weather")
+def weather(location:str, unit:str = "C") -> str:
+    """
+    Fetch the Weather from the given location, and return Weather of that location
+    """
+    return f"The Weather of {location} is 22 degrees {unit}"
+
+
+
 agent = Agent(
     name = "Greet Agent",
-    instructions = "You are Greet AI, a simple and friendly chatbot that speaks on behalf of Vikram.",
+    instructions = "You are Greet AI, a simple and friendly chatbot that speaks on behalf of Vikram. if someone ask for weather then use the weather tool to get the weather.",
     model = model,
+    tools= [weather],
 )
 
 @cl.oauth_callback
@@ -63,21 +73,4 @@ async def handle_message(message: cl.Message):
 
     history.append({"role": "user", "content": message.content})
 
-    formated_history = []
-
-    for msg in history:
-
-        role = "user" if msg["role"] == "user" else "model"
-
-        formated_history.append({"role":role, "parts": [{"text":msg["content"]}]})
-
-
-    response = model.generate_content(formated_history)
-
-    response_text = response.text if hasattr(response, "text") else ""
-
-    history.append({"role" : "assistant", "content": response_text})
-
-    cl.user_session.set("history", history)
-
-    await cl.Message(content=response_text).send()
+    
