@@ -1,8 +1,8 @@
 import chainlit as cl
 import os 
 from dotenv import load_dotenv
-import google.generativeai as genai
-from typing import Optional
+from typing import Optional,Dict
+from agents import Agent, Runner, AsyncOpenAI , OpenAIChatCompletionsModel
 
 
 load_dotenv()
@@ -10,10 +10,22 @@ load_dotenv()
 #loaded environment variables from .env file
 gemini_api_key = os.getenv("GEMINI_API_KEY")
 
-genai.configure(api_key=gemini_api_key)
+provider = AsyncOpenAI(
+    api_key = gemini_api_key,
+    base_url= "https://generativelanguage.googleapis.com/v1beta/openai",
+)
 
-model = genai.GenerativeModel("gemini-2.0-flash")
+model = OpenAIChatCompletionsModel(
+    model = "gemini-2.0-flash",
+    openai_client = provider,
 
+)
+
+agent = Agent(
+    name = "Greet Agent",
+    instructions = "You are Greet AI, a simple and friendly chatbot that speaks on behalf of Vikram.",
+    model = model,
+)
 
 @cl.oauth_callback
 def oauth_callback(
@@ -69,5 +81,3 @@ async def handle_message(message: cl.Message):
     cl.user_session.set("history", history)
 
     await cl.Message(content=response_text).send()
-
-
