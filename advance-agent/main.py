@@ -96,7 +96,6 @@ Me — the chatbot built by Vikram, cooler than your fridge ❄️😎
 What are we chatting about today?""").send()
 
 @cl.on_message
-
 async def handle_message(message: cl.Message):
 
     history = cl.user_session.get("history")
